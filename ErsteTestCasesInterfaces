@@ -1,0 +1,52 @@
+interface SchrankeSchnittstelle{
+public void schrankeOeffnen(bool bezahlt);
+public void schrankeSchliessen();
+public void notAus();
+public int getStatus();
+} 
+
+@Test 
+public void SchrankeOeffnen_bezahlt_ReturnsNullForOpened(){
+schrankeA.schrankeOeffnen(true);
+assertEquals(0, schankeA.getStatus());
+}
+
+@Test 
+public void SchrankeOeffnen_nichtBezahlt_ReturnsOneForClosed(){
+schrankeA.schrankeOeffnen(false);
+assertEquals(1, schankeA.getStatus());
+}
+
+@Test 
+public void notAus_Notfall_ReturnsNullForOpened(){
+schrankeA.notAus();
+assertEquals(0, schrankeA.getStatus());
+}
+
+
+interface ParkautomatSchnittstelle{
+public double berechnePreisParken(Ticket ticketKunde);
+public double bezahleParken(double EinwurfGeld);
+public double getPreisProStunde();
+}
+
+@Test 
+public void berechnePreisParken_zweiStunden_BerechneGebuehrFuerZweiStunden(){
+assertEquals(getPreisProStunde()*2, automatA.berechnePreisParken(ticketTest));
+}
+
+interface ParksystemSchnittstelle{
+public int getFreieParkplaetze();
+public int getMaximaleParkplaetze();
+public void ticketGezogen();
+public void ticketEingezogen();
+}
+
+@Test 
+public void getFreieParkplaetze_DreiParkende_ReturnsFreieParkplaetze(){
+ParksystemA.ticketGezogen();
+ParksystemA.ticketGezogen();
+ParksystemA.ticketGezogen();
+assertEquals(ParksystemA.getMaximaleParkplaetze-3, ParksystemA.getFreieParkplaetze());
+}
+
