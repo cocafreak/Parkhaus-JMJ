@@ -1,0 +1,54 @@
+public interface gateInterface {
+	public void gateOpen(boolean paid);
+	public void gateClose();
+	public int gateState();
+}
+
+@Test
+public void gateOpen_Paid_GateStateIsZero() {
+	gateA.gateOpen(true);
+	assertEquals(0, gateA.gateState());
+}
+@Test
+public void gateOpen_NotPaid_GateStateIsOne() {
+	gateA.gateOpen(false);
+	assertEquals(1, gateA.gateState());
+}
+@Test
+public void gateClose_ClosingGateAfterOpening_GateStateIsOne() {
+	gateA.gateOpen(true);
+	gateA.gateClose();
+	assertEquals(1, gateA.gateState());
+}
+
+
+public interface checkoutInterface {
+	public double ticketPrice(ticket insertedTicket);
+}
+
+@Test
+public void ticketPrice_OneHour_PriceForOneHour() {
+	assertEquals(1.8, checkoutA.ticketPrice(TestTicket));
+}
+@Test
+public void ticketPrice_TwoHours_PriceForTwoHours() {
+	assertEquals(3.6, checkoutA.ticketPrice(TestTicket));
+}
+
+
+public interface parkingSystemInterface {
+	public int getMaximumParkingPlaces();
+	public int getCurrentFreePlaces();
+	public void addUsedPlace();
+	public void reduceUsedPlace();
+}
+
+@Test
+public void getMaximumParkingPlaces_DefaultOutput_ReturnMaximumParkingPlaces() {
+	assertEquals(250, parkingSystemA.getMaximumParkingPlaces());
+}
+@Test
+public void getCurrrentPlaces_FiveSpotsTaken_ReturnMaximumMinusOne() {
+	parkingSystemA.addUsedPlace();
+	assertEquals(249, parkingSystemA.getCurrentFreePlaces());
+}
